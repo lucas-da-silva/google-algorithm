@@ -1,3 +1,4 @@
+import sys
 from ting_file_management.file_management import txt_importer
 from ting_file_management.queue import Queue
 
@@ -25,4 +26,7 @@ def remove(instance: Queue) -> None:
 
 
 def file_metadata(instance: Queue, position: int) -> None:
-    ...
+    if position > len(instance):
+        return print("Posição inválida", file=sys.stderr)
+    searched_file = instance.search(position)
+    print(searched_file)
