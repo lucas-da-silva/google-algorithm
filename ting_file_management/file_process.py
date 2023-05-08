@@ -1,25 +1,28 @@
 from ting_file_management.file_management import txt_importer
-from ting_file_management.abstract_queue import AbstractQueue
+from ting_file_management.queue import Queue
 
 
-def process(path_file: str, instance: AbstractQueue):
+def process(path_file: str, instance: Queue) -> None:
     file_already_added = any(
-        data["nome_do_arquivo"] == path_file for data in instance._data
+        file["nome_do_arquivo"] == path_file for file in instance._data
     )
     if not file_already_added:
-        texts = txt_importer(path_file)
-        text_formatted = {
+        file = txt_importer(path_file)
+        file_formatted = {
             "nome_do_arquivo": path_file,
-            "qtd_linhas": len(texts),
-            "linhas_do_arquivo": texts,
+            "qtd_linhas": len(file),
+            "linhas_do_arquivo": file,
         }
-        instance.enqueue(text_formatted)
-        print(text_formatted)
+        instance.enqueue(file_formatted)
+        print(file_formatted)
 
 
-def remove(instance):
-    """Aqui irá sua implementação"""
+def remove(instance: Queue) -> None:
+    if not len(instance):
+        return print("Não há elementos")
+    file_removed = instance.dequeue()
+    print(f'Arquivo {file_removed["nome_do_arquivo"]} removido com sucesso')
 
 
-def file_metadata(instance, position):
-    """Aqui irá sua implementação"""
+def file_metadata(instance: Queue, position: int) -> None:
+    ...
