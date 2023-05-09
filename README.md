@@ -1,5 +1,3 @@
-# Project Google Algorithm
-
 <h1 align="center">Algoritmo de indexação de documentos</h1>
 
 ## Sobre o projeto
